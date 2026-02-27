@@ -1,64 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-// // import Groq from 'groq-sdk';
-
-// // const groq = new Groq({ apiKey: process.env.AI_API_KEY});
-
-
-// export const getSafeWaypoint = async (start, end) => {
-//   const prompt = `
-// You are a smart routing assistant that generates safe waypoints for travel. 
-// Given a starting location and an ending location, your task is to generate coordinates 
-// (lat, lng) for 1 or more intermediate "safe" points such that the route goes through 
-// areas that are generally safe, avoid high-risk zones, and remain practical for driving/walking.
-
-// Rules:
-// 1. Return waypoints as an array of coordinates in [latitude, longitude] format.
-// 2. Ensure waypoints create a reasonable path from start to end.
-// 3. Do not return unsafe or restricted zones (high crime areas, construction zones, flood zones, etc.).
-// 4. Output ONLY the array of coordinates, no extra text.
-
-// Example Input:
-// Start: [18.458419, 73.850483]
-// End: [18.498677, 73.857842]
-
-// Your Output (example format):
-// [[18.465123, 73.851456], [18.475789, 73.853210]],
-
-// actual Input:
-// Start: ${JSON.stringify(start)}
-// End: ${JSON.stringify(end)}
-// `;
-
-//   const response = await fetch(" https://api.groq.com/openai/v1/chat/completions", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//       "Authorization": `Bearer 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` // put your Groq API key in env
-//     },
-//     body: JSON.stringify({
-//       model: "groq-cloud/1",
-//       prompt,
-//     //   max_output_tokens: 50
-//     })
-//   });
-
-//   const data = await response.json();
-//         console.log(data);
-//   // Example response: "[18.465123, 73.851456]"
-//   try {
-//     const waypoint = JSON.parse(data.output_text.trim());
-//     if (Array.isArray(waypoint) && waypoint.length === 2) {
-//       return waypoint; // [lat, lng]
-//     } else {
-//       throw new Error("AI returned invalid waypoint");
-//     }
-//   } catch (err) {
-//     console.error("Error parsing AI response:", err);
-//     return null;
-//   }
-// }
 
 import Groq from "groq-sdk";
 
@@ -107,21 +49,19 @@ End: ${JSON.stringify(end)}
                 { role: "user", content: prompt }
             ],
             model: "openai/gpt-oss-20b",
-            //   max_output_tokens: 150
         });
         const parsed = JSON.parse(chatCompletion.choices[0]?.message?.content || "{}");
         const waypoint = parsed.data;
         console.log("Extracted waypoint from AI response:", waypoint);
         if (!waypoint) throw new Error("No waypoint returned from AI");
         
-        const waypoints = waypoint.map(wp => wp.waypoint); // Extract just the coordinates from the AI response
-
+        const waypoints = waypoint.map(wp => wp.waypoint); 
         if (
             Array.isArray(waypoints) &&
             waypoints.every(wp => Array.isArray(wp) && wp.length === 2)
         ) {
             console.log("Parsed waypoints from AI:", waypoints);
-            return waypoints; // [[lat, lng], ...]
+            return waypoints;
         } else {
             throw new Error("AI returned invalid waypoint format");
         }
