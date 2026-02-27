@@ -6,7 +6,6 @@ export const protectedRoute = async (req,res,next)=>{
 console.log("JWT:", req.cookies?.jwt);
 
    const token = req.cookies.jwt;
-   // const token = req.header("Authorization")?.replace("Bearer ", "");
 
    if(!token){
     return res.status(400).json({message:"token required"})
