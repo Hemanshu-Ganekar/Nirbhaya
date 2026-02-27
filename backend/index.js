@@ -22,7 +22,6 @@ app.use("/api/auth",authRouter);
 app.use("/api/hex",hexRouter);
 app.use("/api/report", reportRouter);
 server.listen(3000, () => {
-            console.log("ENV:", process.env.MONGODB_URL);
             connectdb();
     console.log('Server is running on port 3000');
 });

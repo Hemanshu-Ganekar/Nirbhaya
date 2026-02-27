@@ -6,12 +6,6 @@ import Groq from "groq-sdk";
 
 const groq = new Groq({ apiKey: process.env.AI_API_KEY});
 
-/**
- * Generate safe waypoints between start and end using Groq SDK
- * @param {[number, number]} start - [lat, lng]
- * @param {[number, number]} end - [lat, lng]
- * @returns {Promise<[[number, number]] | null>} Array of safe waypoints
- */
 export async function getSafeWaypoint(start, end) {
     const prompt = `
 You are a smart routing assistant that generates safe waypoints for travel. 
