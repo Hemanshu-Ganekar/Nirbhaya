@@ -10,7 +10,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 await mongoose.connect(process.env.MONGODB_URL);
-const { default: SC } = await import("./model/safecityIncident.model.js");
+const { default: SC } = await import("../model/safecityIncident.model.js");
 
 // ── Pune localities with realistic lat/lng ─────────────────────────────────
 const ZONES = [

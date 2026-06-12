@@ -63,7 +63,7 @@ async function seedHospitals() {
   await mongoose.connect(MONGO_URL);
   console.log("Connected to MongoDB for hospital seeding...");
 
-  const { default: Hospital } = await import("./model/hospital.model.js");
+  const { default: Hospital } = await import("../model/hospital.model.js");
 
   // Drop existing data and re-seed
   await Hospital.deleteMany({});

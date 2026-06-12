@@ -23,7 +23,7 @@ async function testDetail(scId) {
 
 async function main() {
   await mongoose.connect(MONGO_URL);
-  const { default: SC } = await import("./model/safecityIncident.model.js");
+  const { default: SC } = await import("../model/safecityIncident.model.js");
 
   // Get 3 bare samples
   const samples = await SC.find({ categories: "", description: "" }).limit(3).lean();

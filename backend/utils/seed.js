@@ -12,7 +12,7 @@ async function seed() {
   await mongoose.connect(MONGO_URL);
   console.log("Connected to MongoDB for seeding...");
 
-  const { default: User } = await import("./model/user.model.js");
+  const { default: User } = await import("../model/user.model.js");
   const salt = await bcrypt.genSalt(10);
 
   const demoUserEmail       = "priya@nirbhaya.app";
@@ -238,7 +238,7 @@ async function seed() {
   /* ──────────────────────────── */
   /* ── Hex Zones (H3 res 7)  ── */
   /* ──────────────────────────── */
-  const { default: HexZone } = await import("./model/hex.model.js");
+  const { default: HexZone } = await import("../model/hex.model.js");
   const { latLngToCell, gridDisk, cellToLatLng } = await import("h3-js");
   await HexZone.deleteMany({});
   console.log("Cleared old hex zones.");

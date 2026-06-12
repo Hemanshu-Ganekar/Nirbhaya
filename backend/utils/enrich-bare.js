@@ -45,7 +45,7 @@ function parseDetailResponse(raw) {
 
 async function main() {
   await mongoose.connect(MONGO_URL);
-  const { default: SC } = await import("./model/safecityIncident.model.js");
+  const { default: SC } = await import("../model/safecityIncident.model.js");
   let totalEnriched = 0;
 
   for (let round = 0; round < MAX_ROUNDS; round++) {

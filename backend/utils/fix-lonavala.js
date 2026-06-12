@@ -10,7 +10,7 @@ const LONAVALA_LNG = 73.4069;
 const RADIUS_DEG = 0.15; // ~15 km
 
 await mongoose.connect(MONGO_URI);
-const { default: Report } = await import('./model/report.model.js');
+const { default: Report } = await import('../model/report.model.js');
 
 // ── Step 1: Show existing Lonavala reports ────────────────────────────────
 const existing = await Report.find({

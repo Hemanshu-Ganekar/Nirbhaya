@@ -10,7 +10,7 @@ function toFormBody(p) {
 
 async function main() {
   await mongoose.connect(process.env.MONGODB_URL);
-  const { default: SC } = await import("./model/safecityIncident.model.js");
+  const { default: SC } = await import("../model/safecityIncident.model.js");
 
   const sample = await SC.findOne({ categories: "", description: "" }).lean();
   console.log("Testing scId:", sample.scId);

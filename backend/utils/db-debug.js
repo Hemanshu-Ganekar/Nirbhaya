@@ -6,7 +6,7 @@ const MONGO_URL = process.env.MONGODB_URL || "mongodb+srv://selida2652_db_user:t
 
 async function debug() {
   await mongoose.connect(MONGO_URL);
-  const { default: SC } = await import("./model/safecityIncident.model.js");
+  const { default: SC } = await import("../model/safecityIncident.model.js");
 
   const total = await SC.countDocuments();
   const withRaw = await SC.countDocuments({ raw: { $exists: true, $ne: null } });

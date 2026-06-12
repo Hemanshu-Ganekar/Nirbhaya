@@ -25,7 +25,7 @@ function parseDetailResponse(raw) {
 
 async function main() {
   await mongoose.connect(process.env.MONGODB_URL);
-  const { default: SC } = await import("./model/safecityIncident.model.js");
+  const { default: SC } = await import("../model/safecityIncident.model.js");
 
   // Get one bare record
   const doc = await SC.findOne({ categories: "", description: "" }).lean();

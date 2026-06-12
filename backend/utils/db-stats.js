@@ -6,7 +6,7 @@ const MONGO_URL = process.env.MONGODB_URL || "mongodb+srv://selida2652_db_user:t
 
 async function stats() {
   await mongoose.connect(MONGO_URL);
-  const { default: SC } = await import("./model/safecityIncident.model.js");
+  const { default: SC } = await import("../model/safecityIncident.model.js");
   const total = await SC.countDocuments();
   const enriched = await SC.countDocuments({ categories: { $ne: "" } });
   const withDesc = await SC.countDocuments({ description: { $ne: "" } });

@@ -167,7 +167,7 @@ async function main() {
   await mongoose.connect(MONGO_URL);
   console.log("✓ Connected to MongoDB");
 
-  const { default: SafeCityIncident } = await import("./model/safecityIncident.model.js");
+  const { default: SafeCityIncident } = await import("../model/safecityIncident.model.js");
 
   // Ensure index
   await SafeCityIncident.collection.createIndex({ location: "2dsphere" }).catch(() => {});
