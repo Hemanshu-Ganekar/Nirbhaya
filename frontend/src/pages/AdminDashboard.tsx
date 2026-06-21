@@ -19,7 +19,7 @@ import { adminGetAllReports, adminGetAllUsers, adminGetAlerts } from "@/lib/api"
 import { io as ioClient, type Socket } from "socket.io-client";
 import { useSosAlarm } from "@/hooks/use-sos-alarm";
 
-const GEMINI_KEY = "AIzaSyBobtdTj_dANiuRX1UNjKFFsA295cQNwes";
+const GEMINI_KEY = import.meta.env.VITE_GEMINI_API_KEY || "";
 
 export default function AdminDashboard() {
   const { user } = useAuth();

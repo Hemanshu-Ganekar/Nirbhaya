@@ -65,7 +65,7 @@ function normalizeSeverity(value: unknown): number {
 
 /* ─── Google Maps API config ─────────────────────────────────────────────── */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-(setOptions as any)({ apiKey: "AIzaSyBHQJgdFNDxvNZeeDp9sbQGWW7eFn1arm0", version: "weekly" });
+(setOptions as any)({ apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY || "", version: "weekly" });
 
 /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ Leaflet icon fix â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -735,7 +735,7 @@ async function fetchRealRoutes(
 }
 
 /* ── Gemini 2.5 Flash route safety analysis ── */
-const GEMINI_API_KEY = "AIzaSyBobtdTj_dANiuRX1UNjKFFsA295cQNwes";
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "";
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
 interface AIRouteAnalysis {

@@ -2,6 +2,7 @@ import { type PoliceStation, type Incident, type RouteOption, type TrustedContac
 import type { SharingPrefs } from "@/lib/auth";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "https://nirbhaya-341y.onrender.com";
+const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || "";
 
 /* ── Reverse Geocoding ── */
 const _geoCache = new Map<string, string>();
@@ -15,7 +16,7 @@ function ensureGeocoderLoaded(): Promise<void> {
     try {
       // Dynamically import the loader (same one Dashboard uses)
       const loader = await import("@googlemaps/js-api-loader");
-      (loader.setOptions as any)({ apiKey: "AIzaSyBHQJgdFNDxvNZeeDp9sbQGWW7eFn1arm0", version: "weekly" });
+      (loader.setOptions as any)({ apiKey: GOOGLE_MAPS_API_KEY, version: "weekly" });
       await loader.importLibrary("geocoding");
     } catch { /* ignore */ }
   })();
