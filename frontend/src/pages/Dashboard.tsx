@@ -21,7 +21,7 @@ import { useAuth } from "@/lib/auth";
 import SOSButton from "@/components/SOSButton";
 import DashboardNav from "@/components/DashboardNav";
 import GuestBanner from "@/components/GuestBanner";
-import { MapContainer, TileLayer, Marker, Popup, Polyline, Circle, Polygon, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Polyline, Circle, Polygon, useMap, useMapEvents } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import L from "leaflet";
 import { useQuery } from "@tanstack/react-query";
@@ -976,6 +976,31 @@ function MapController({
     };
     return () => { delete (window as any).__mapGoToUser; };
   }, [mapUserLoc, map]);
+
+  return null;
+}
+
+function DestinationMapPicker({
+  active,
+  onPick,
+}: {
+  active: boolean;
+  onPick: (loc: DemoLocation) => void;
+}) {
+  useMapEvents({
+    click: async (e) => {
+      if (!active) return;
+      const lat = e.latlng.lat;
+      const lng = e.latlng.lng;
+      let name = `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+      try {
+        name = await reverseGeocode(lat, lng);
+      } catch {
+        // Use the coordinate fallback when reverse geocoding fails.
+      }
+      onPick({ name, lat, lng });
+    },
+  });
 
   return null;
 }
@@ -2026,6 +2051,7 @@ export default function Dashboard() {
   const [originLoc, setOriginLoc] = useState<DemoLocation | null>(null);
   const [destination, setDestination] = useState("");
   const [destLoc, setDestLoc] = useState<DemoLocation | null>(null);
+  const [destinationPickMode, setDestinationPickMode] = useState(false);
   const [routes, setRoutes] = useState<RouteOption[]>([]);
   const [hasSearched, setHasSearched] = useState(false);
   const [selectedRoute, setSelectedRoute] = useState<RouteOption | null>(null);
@@ -2653,6 +2679,15 @@ export default function Dashboard() {
             routeCoords={selectedRoute?.coordinates}
             userLoc={userLoc}
           />
+          <DestinationMapPicker
+            active={destinationPickMode}
+            onPick={(loc) => {
+              setDestination(loc.name);
+              setDestLoc(loc);
+              setDestinationPickMode(false);
+              setSearchError("");
+            }}
+          />
           {navMode && <NavMapController userLoc={userLoc} />}
 
           {/* Live location arrow + accuracy */}
@@ -3043,12 +3078,33 @@ export default function Dashboard() {
                     {/* Destination */}
                     <LocationInput
                       value={destination}
-                      onChange={(v) => { setDestination(v); setDestLoc(null); }}
-                      onSelect={(loc) => { setDestination(loc.name); setDestLoc(loc); setSearchError(""); }}
+                      onChange={(v) => { setDestination(v); setDestLoc(null); setDestinationPickMode(false); }}
+                      onSelect={(loc) => { setDestination(loc.name); setDestLoc(loc); setDestinationPickMode(false); setSearchError(""); }}
                       placeholder="To — e.g. Kothrud"
                       dotColor="#ef4444"
                       userLoc={userLoc}
                     />
+                    <div className="flex items-center justify-between gap-2 pl-1">
+                      <button
+                        type="button"
+                        className={`flex items-center gap-1.5 text-[11px] font-medium hover:underline ${
+                          destinationPickMode ? "text-primary" : "text-muted-foreground"
+                        }`}
+                        onClick={() => setDestinationPickMode((v) => !v)}
+                      >
+                        <Crosshair className="h-3 w-3" />
+                        {destinationPickMode ? "Tap map to set destination" : "Pick destination from map"}
+                      </button>
+                      {destinationPickMode && (
+                        <button
+                          type="button"
+                          className="text-[11px] text-muted-foreground hover:text-foreground hover:underline"
+                          onClick={() => setDestinationPickMode(false)}
+                        >
+                          Cancel
+                        </button>
+                      )}
+                    </div>
 
                     {/* Travel mode selector */}
                     <div className="flex items-center gap-1.5">
