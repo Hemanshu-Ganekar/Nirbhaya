@@ -9,11 +9,11 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
     proxy: {
       "/api": {
-        target: process.env.VITE_PROXY_TARGET || "http://localhost:3000",
+        target: process.env.VITE_PROXY_TARGET || "https://nirbhaya-341y.onrender.com",
         changeOrigin: true,
       },
       "/socket.io": {
-        target: process.env.VITE_PROXY_TARGET || "http://localhost:3000",
+        target: process.env.VITE_PROXY_TARGET || "https://nirbhaya-341y.onrender.com",
         changeOrigin: true,
         ws: true,
       },

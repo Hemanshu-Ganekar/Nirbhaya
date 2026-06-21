@@ -1,7 +1,7 @@
 import { type PoliceStation, type Incident, type RouteOption, type TrustedContact } from "@/lib/mockData";
 import type { SharingPrefs } from "@/lib/auth";
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || "";
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "https://nirbhaya-341y.onrender.com";
 
 /* ── Reverse Geocoding ── */
 const _geoCache = new Map<string, string>();

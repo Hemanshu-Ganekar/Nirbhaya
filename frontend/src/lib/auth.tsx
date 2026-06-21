@@ -46,7 +46,7 @@ export interface SignupData {
   profilePic?: string;
 }
 
-const API = import.meta.env.VITE_API_BASE_URL || "";
+const API = import.meta.env.VITE_API_BASE_URL || "https://nirbhaya-341y.onrender.com";
 
 interface AuthCtx {
   user: User | null;
