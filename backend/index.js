@@ -23,7 +23,7 @@ const allowedOrigins = [
     "http://localhost:8083",
     "http://10.23.12.219:8080",
     "https://nirbhaya-frontend-r26zopcvn-hemanshu-s-projects-40d971d1.vercel.app",
-    "https://nirbhaya-frontend-hemanshu-s-projects-40d971d1.vercel.app?_vercel_share=pFpzUPttFcOrhQMmN0KkFp24cl5K9lYZ",
+    "https://nirbhaya-frontend-hemanshu-s-projects-40d971d1.vercel.app",
     // Production origins from environment
     ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(",").map(o => o.trim()) : []),
 ];
